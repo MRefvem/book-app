@@ -21,6 +21,41 @@ app.get('/hello', (request, response) => {
   response.render('pages/index.ejs');
 });
 
+// SEARCHES
+app.get('/searches/new', (request, response) => {
+  response.render('pages/searches/new.ejs');
+});
+
+app.post('/searches/new', (request, response) => {
+  let query = request.body.search[0];
+  let titleOrAuthor = request.body.search[1];
+
+  let url = 'https://www.googleapis.com/books/v1/volumes?q=';
+
+  if(titleOrAuthor === 'title'){
+    url+= `+intitle:${query}`;
+  } else if(titleOrAuthor === 'author'){
+    url+= `+inauthor:${query}`;
+  };
+
+  superagent.get(url)
+    .then(results => {
+      let bookArray = results.body.items;
+      const finalBookArray = bookArray.map(book => {
+        return new Book(book.volumeInfo);
+      });
+      console.log(finalBookArray);
+      response.render('show.ejs', { searchResults: finalBookArray });
+    });
+});
+
+// Constructor
+function Book(info){
+  const placeholderImage = 'https://i.imgur.com/J5LVHEL.jpg';
+  this.title = info.title ? info.title : 'title unavailable';
+};
+
+// Turns on Server
 app.listen(PORT, () => {
   console.log(`book server, listening on ${PORT}`);
 });
