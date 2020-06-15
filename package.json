@@ -1,0 +1,25 @@
+{
+  "name": "book-app",
+  "version": "1.0.0",
+  "description": "Code Fellows 301 Labs 11-14",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MRefvem/book-app.git"
+  },
+  "keywords": [],
+  "author": "Michael Refvem",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MRefvem/book-app/issues"
+  },
+  "homepage": "https://github.com/MRefvem/book-app#readme",
+  "dependencies": {
+    "ejs": "^3.1.3",
+    "express": "^4.17.1",
+    "superagent": "^5.2.2"
+  }
+}
