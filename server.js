@@ -44,6 +44,7 @@ app.post('/searches/new', (request, response) => {
       const finalBookArray = bookArray.map(book => {
         return new Book(book.volumeInfo);
       });
+      console.log(results.body.items.imageLinks);
       console.log(finalBookArray);
       response.render('show.ejs', { searchResults: finalBookArray });
     });
@@ -52,7 +53,10 @@ app.post('/searches/new', (request, response) => {
 // Constructor
 function Book(info){
   const placeholderImage = 'https://i.imgur.com/J5LVHEL.jpg';
+  this.image = info.imageLinks ? info.imageLinks : placeholderImage;
   this.title = info.title ? info.title : 'title unavailable';
+  this.author = info.authors ? info.authors : 'not available';
+  this.description = info.description ? info.description : 'not available';
 };
 
 // Turns on Server
