@@ -28,9 +28,9 @@ Estimate of time needed to complete: 1hr
 
 Start time: 2:15pm
 
-Finish time: _____
+Finish time: 3:10pm
 
-Actual time needed to complete: _____
+Actual time needed to complete: 55 minutes
 
 ---
 
@@ -38,7 +38,7 @@ Number and name of feature: Lab 11 Feature 2
 
 Estimate of time needed to complete: 1hr
 
-Start time: _____
+Start time: 3:10pm
 
 Finish time: _____
 
