@@ -19,34 +19,40 @@ app.set('view engine', 'ejs'); // Look in 'view' for EJS
 
 // ROUTES
 // HOME
-app.get('/', (request, response) => {
-  response.render('pages/index.ejs');
-});
+app.get('/', getHome);
+app.get('/searches/new', newSearch);
+app.post('/searches', searchResults);
 
-// SEARCHES
-app.get('/searches/new', (request, response) => {
-  response.render('pages/searches/new.ejs');
-});
+// getHome handler
+function getHome(request, response) {
+  response.status(200).render('pages/index.ejs');
+};
 
-app.post('/searches', (request, response) => {
+// newSearch handler
+function newSearch(request, response) {
+  response.status(200).render('pages/searches/new.ejs');
+};
+
+// searchResults handler
+function searchResults(request, response) {
   try {
     let query = request.body.search[0];
     let titleOrAuthor = request.body.search[1];
-
+  
     const numPerPage = 10;
-
+  
     let url = 'https://www.googleapis.com/books/v1/volumes?q=';
-
+  
     const queryParams = {
       maxResults: numPerPage
     }
-
+  
     if(titleOrAuthor === 'title'){
       url+= `+intitle:${query}`;
     } else if(titleOrAuthor === 'author'){
       url+= `+inauthor:${query}`;
     };
-
+  
     superagent.get(url)
       .query(queryParams)
       .then(results => {
@@ -62,8 +68,9 @@ app.post('/searches', (request, response) => {
       .catch();
   } catch(err) {
     response.status(500).send('sorry, we messed up');
-  }
-});
+  };
+};
+
 
 // Constructor
 function Book(info){
