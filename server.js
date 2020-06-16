@@ -26,7 +26,7 @@ app.get('/searches/new', (request, response) => {
   response.render('pages/searches/new.ejs');
 });
 
-app.post('/searches/new', (request, response) => {
+app.post('/searches', (request, response) => {
   let query = request.body.search[0];
   let titleOrAuthor = request.body.search[1];
 
@@ -48,18 +48,13 @@ app.post('/searches/new', (request, response) => {
     .query(queryParams)
     .then(results => {
       let bookArray = results.body.items;
-      console.log(bookArray);
+      // console.log(bookArray);
       const finalBookArray = bookArray.map(book => {
         return new Book(book.volumeInfo);
       });
-      console.log(results.body.items.imageLinks);
-      console.log(finalBookArray);
-      response.render('pages/searches/show.ejs', {
-        img: finalBookArray[0].image.thumbnail,
-        h3: finalBookArray[0].title,
-        h4: finalBookArray[0].author,
-        p: finalBookArray[0].description,
-        searchResults: finalBookArray });
+      // console.log(results.body.items.imageLinks);
+      // console.log(finalBookArray);
+        response.render('pages/searches/show.ejs', {books:finalBookArray});
     });
 });
 

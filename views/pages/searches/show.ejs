@@ -22,10 +22,12 @@
     </header>
     <main>
       <div>
-        <img src="<%= img %>">
-        <h3>Hello <%= h3 %></h3>
-        <h4>Author <%= h4 %></h4>
-        <p>Description <%= p %></p>
+        <% books.forEach(book => { %>
+          <img src="<%= book.image.thumbnail %>" alt="<% book.image.thumbnail %>"/>
+          <h3>Hello <%= book.title %></h3>
+          <h4>Author <%= book.author %></h4>
+          <p>Description <%= book.description %></p>
+        <% }) %>
       </div>
     </main>
     <footer></footer>
