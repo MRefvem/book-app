@@ -30,7 +30,13 @@ app.post('/searches/new', (request, response) => {
   let query = request.body.search[0];
   let titleOrAuthor = request.body.search[1];
 
+  const numPerPage = 10;
+
   let url = 'https://www.googleapis.com/books/v1/volumes?q=';
+
+  const queryParams = {
+    maxResults: numPerPage
+  }
 
   if(titleOrAuthor === 'title'){
     url+= `+intitle:${query}`;
@@ -39,14 +45,21 @@ app.post('/searches/new', (request, response) => {
   };
 
   superagent.get(url)
+    .query(queryParams)
     .then(results => {
       let bookArray = results.body.items;
+      console.log(bookArray);
       const finalBookArray = bookArray.map(book => {
         return new Book(book.volumeInfo);
       });
       console.log(results.body.items.imageLinks);
       console.log(finalBookArray);
-      response.render('show.ejs', { searchResults: finalBookArray });
+      response.render('pages/searches/show.ejs', {
+        img: finalBookArray[0].image.thumbnail,
+        h3: finalBookArray[0].title,
+        h4: finalBookArray[0].author,
+        p: finalBookArray[0].description,
+        searchResults: finalBookArray });
     });
 });
 
