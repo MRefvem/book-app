@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Book App</title>
+    <link href="/styles/reset.css" rel="stylesheet" type="text/css">
+    <link href="/styles/base.css" rel="stylesheet" type="text/css">
+    <link href="/styles/layout.css" rel="stylesheet" type="text/css">
+    <link href="/styles/modules.css" rel="stylesheet" type="text/css">
+    <link href="/styles/icons.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <header>
+      <div>Best Books!</div>
+      <div>Search Results</div>
+    </header>
+    <main>
+        <ul>
+          <% books.forEach(book => { %>
+            <li>
+              <img src="<%= book.image.thumbnail %>" alt="<% book.image.thumbnail %>"/>
+              <h3><%= book.title %></h3>
+              <h4><%= book.author %></h4>
+              <p><%= book.description %></p>
+            </li>
+          <% }) %>
+        </ul>
+    </main>
+    <footer></footer>
+  </body>
+</html>
