@@ -18,7 +18,7 @@ app.set('view engine', 'ejs'); // Look in 'view' for EJS
 
 // ROUTES
 // HOME
-app.get('/hello', (request, response) => {
+app.get('/', (request, response) => {
   response.render('pages/index.ejs');
 });
 // app.use('*', handleNotFound);
