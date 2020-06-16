@@ -10,25 +10,20 @@
   </head>
   <body>
     <header>
-      <nav>
-        <div>
-          <h1>Best Books!</h1>
-          <!-- Menu -->
-        </div>
-        <div>
-          <h2>Search Results</h2>
-        </div>
-      </nav>
+      <div>Best Books!</div>
+      <div>Search Results</div>
     </header>
     <main>
-      <div>
-        <% books.forEach(book => { %>
-          <img src="<%= book.image.thumbnail %>" alt="<% book.image.thumbnail %>"/>
-          <h3>Hello <%= book.title %></h3>
-          <h4>Author <%= book.author %></h4>
-          <p>Description <%= book.description %></p>
-        <% }) %>
-      </div>
+        <ul>
+          <% books.forEach(book => { %>
+            <li>
+              <img src="<%= book.image.thumbnail %>" alt="<% book.image.thumbnail %>"/>
+              <h3><%= book.title %></h3>
+              <h4><%= book.author %></h4>
+              <p><%= book.description %></p>
+            </li>
+          <% }) %>
+        </ul>
     </main>
     <footer></footer>
   </body>
