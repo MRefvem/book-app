@@ -32,11 +32,8 @@ function getHome(request, response) {
     .then(sqlResults => {
       let books = sqlResults.rows;
       console.log('our books', books);
+      response.status(200).render('pages/index.ejs', { bookCollection: books });
     });
-
-
-
-  response.status(200).render('pages/index.ejs');
 };
 
 // newSearch handler
