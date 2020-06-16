@@ -22,6 +22,7 @@ app.set('view engine', 'ejs'); // Look in 'view' for EJS
 app.get('/', getHome);
 app.get('/searches/new', newSearch);
 app.post('/searches', searchResults);
+app.use('*', notFound);
 
 // getHome handler
 function getHome(request, response) {
@@ -57,12 +58,9 @@ function searchResults(request, response) {
       .query(queryParams)
       .then(results => {
         let bookArray = results.body.items;
-        // console.log(bookArray);
         const finalBookArray = bookArray.map(book => {
           return new Book(book.volumeInfo);
         });
-        // console.log(results.body.items.imageLinks);
-        // console.log(finalBookArray);
           response.render('pages/searches/show.ejs', {books:finalBookArray});
       })
       .catch();
@@ -82,9 +80,9 @@ function Book(info){
 };
 
 // 404
-// function handleNotFound(request, response){
-//   response.status(404).send('sorry, this route does not exist');
-// };
+function notFound(request, response){
+  response.status(404).send('sorry, this route does not exist');
+};
 
 // Turns on Server
 app.listen(PORT, () => {
