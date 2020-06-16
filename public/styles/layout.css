@@ -1,12 +1,13 @@
 body {
   max-width: 480px;
   margin: auto;
+  background-color: darkgray;
 }
 
 header {
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 50px 40px;
+  grid-template-rows: 62px 44px;
   color: white;
   font-family: sans-serif;
 }
@@ -14,14 +15,31 @@ header {
 div:nth-child(1) {
   background-color: black;
   text-align: left;
-  line-height: 50px;
+  line-height: 62px;
   font-size: 110%;
   padding-left: 15px;
 }
 
 div:nth-child(2) {
   background-color: darkslategray;
-  line-height: 40px;
+  line-height: 44px;
+}
+
+.box {
+  border: 1px solid black;
+  width: 400px;
+  height: 50px;
+  margin: 20px;
+  border-radius: 3px;
+}
+
+fieldset {
+  margin-left: 20px;
+}
+
+input {
+  color: black;
+
 }
 
 main {
@@ -38,6 +56,11 @@ nav {
 
 div {
   text-align: center;
+}
+
+button {
+  color: white;
+  background-color: black;
 }
 
 li {
