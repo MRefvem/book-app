@@ -7,8 +7,26 @@
     <link href="/styles/layout.css" rel="stylesheet" type="text/css">
     <link href="/styles/modules.css" rel="stylesheet" type="text/css">
     <link href="/styles/icons.css" rel="stylesheet" type="text/css">
+    <!-- <% include(./layout/head.ejs) %> -->
   </head>
   <body>
+    <!-- <section>
+      This is all happening on our show.ejs
+      <% myToDoTasks.forEach(task => { %>
+        <form action="/addBook" method="post">
+          <div>
+            <span><%= task.title %></span>
+            <span><%= task.description %></span>
+            <span><%= task.completion %></span>
+            <a href="/tasks/<%= task.id %>">show details</a>
+          </div>
+          <input type=hidden name="title" value=<%=task.title%> />
+          <input type=hidden name="authors" value=<%=task.authors%> />
+          <input type=hidden name="description" value=<%=task.description%> />
+          <button>add to my favorites</button>
+        </form>
+      <% }) %>
+    </section> -->
     <header>
       <div>Best Books!</div>
       <div>Home Page</div>
