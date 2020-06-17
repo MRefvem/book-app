@@ -6,7 +6,7 @@ const superagent = require('superagent');
 const { response } = require('express');
 require('ejs');
 require('dotenv').config();
-// const pg = require('pg');
+const pg = require('pg');
 
 // Application Setup
 const app = express();
@@ -26,7 +26,14 @@ app.use('*', notFound);
 
 // getHome handler
 function getHome(request, response) {
-  response.status(200).render('pages/index.ejs');
+  // get stuff from the database here
+  let sql = 'SELECT * FROM books;';
+  client.query(sql)
+    .then(sqlResults => {
+      let books = sqlResults.rows;
+      console.log('our books', books);
+      response.status(200).render('pages/index.ejs', { bookCollection: books });
+    });
 };
 
 // newSearch handler
@@ -85,6 +92,12 @@ function notFound(request, response){
 };
 
 // Turns on Server
-app.listen(PORT, () => {
-  console.log(`book server, listening on ${PORT}`);
-});
+const client = new pg.Client(process.env.DATABASE_URL);
+client.on('error', err => console.error(err));
+client.connect()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`book server, listening on ${PORT}`);
+    })
+  });
+  
