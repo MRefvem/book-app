@@ -33,7 +33,6 @@ function getHome(request, response) {
   client.query(sql)
     .then(sqlResults => {
       let books = sqlResults.rows;
-      console.log('our books', books);
       response.status(200).render('pages/index.ejs', { bookCollection: books });
     });
 };
@@ -67,7 +66,6 @@ function searchResults(request, response) {
       .query(queryParams)
       .then(results => {
         let bookArray = results.body.items;
-        console.log(bookArray[0].volumeInfo.industryIdentifiers[0]);
         const finalBookArray = bookArray.map(book => {
           return new Book(book.volumeInfo);
         });
@@ -81,7 +79,6 @@ function searchResults(request, response) {
 
 // getBookDetails handler
 function getBookDetails(request, response) {
-  console.log('this is my request.params/id', request.params);
   let id = request.params.id;
   let sql = 'SELECT * FROM books WHERE id=$1;';
   let safeValues = [id];
@@ -96,12 +93,10 @@ function addBook(request, response) {
   let {author, title, isbn, image, description} = request.body;
   let sql = 'INSERT INTO books (author, title, isbn, image_url, description) VALUES ($1, $2, $3, $4, $5) RETURNING id;';
   let safeValues = [author, title, isbn, image, description];
-  console.log(request.body);
 
   client.query(sql, safeValues)
     .then(sqlResults => {
       let id = sqlResults.rows[0].id;
-      console.log(id);
       response.status(200).redirect(`/books/${id}`);
     });
 };
