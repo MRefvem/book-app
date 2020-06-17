@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3001;
 
 // Application Middleware
 app.use(express.urlencoded({ extended: true })); // Body Parser
-app.use(express.static('public')); // Serve files from 'Public'
+app.use('/public', express.static('public')); // Serve files from 'Public'
 app.set('view engine', 'ejs'); // Look in 'view' for EJS
 
 // ROUTES
@@ -87,7 +87,7 @@ function getBookDetails(request, response) {
 
   client.query(sql, safeValues)
     .then(sqlResults => {
-      response.status(200).render('pages/books/detail.ejs', {oneBook:sqlResults.rows[0]});
+      response.status(200).render('pages/books/show.ejs', {oneBook:sqlResults.rows[0]});
     })
 }
 
