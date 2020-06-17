@@ -9,10 +9,18 @@
         <ul>
           <% books.forEach(book => { %>
             <li>
-              <img src="<%= book.image.thumbnail %>" alt="<% book.image.title %>"/>
+              <img src="<%= book.image %>" alt="<% book.title %>"/>
               <h3><%= book.title %></h3>
               <h4><%= book.author %></h4>
               <p><%= book.description %></p>
+              <form action="/books" method="post">
+                <input type=hidden name="title" value="<%= book.title %>" />
+                <input type=hidden name="author" value="<%= book.author %>" />
+                <input type=hidden name="description" value="<%= book.description %>" />
+                <input type=hidden name="image" value="<%= book.image %>" />
+                <input type=hidden name="isbn" value="<%= book.isbn %>" />
+                <button>Add to My List</button>
+              </form>
             </li>
           <% }) %>
         </ul>

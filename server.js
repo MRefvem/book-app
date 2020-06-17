@@ -23,6 +23,7 @@ app.get('/', getHome);
 app.get('/searches/new', newSearch);
 app.post('/searches', searchResults);
 app.get('/books/:id', getBookDetails);
+app.post('/books', addBook);
 app.use('*', notFound);
 
 // getHome handler
@@ -32,7 +33,6 @@ function getHome(request, response) {
   client.query(sql)
     .then(sqlResults => {
       let books = sqlResults.rows;
-      console.log('our books', books);
       response.status(200).render('pages/index.ejs', { bookCollection: books });
     });
 };
@@ -66,7 +66,6 @@ function searchResults(request, response) {
       .query(queryParams)
       .then(results => {
         let bookArray = results.body.items;
-        console.log(bookArray[0].volumeInfo.industryIdentifiers[0]);
         const finalBookArray = bookArray.map(book => {
           return new Book(book.volumeInfo);
         });
@@ -80,7 +79,6 @@ function searchResults(request, response) {
 
 // getBookDetails handler
 function getBookDetails(request, response) {
-  console.log('this is my request.params/id', request.params);
   let id = request.params.id;
   let sql = 'SELECT * FROM books WHERE id=$1;';
   let safeValues = [id];
@@ -91,15 +89,27 @@ function getBookDetails(request, response) {
     })
 }
 
+function addBook(request, response) {
+  let {author, title, isbn, image, description} = request.body;
+  let sql = 'INSERT INTO books (author, title, isbn, image_url, description) VALUES ($1, $2, $3, $4, $5) RETURNING id;';
+  let safeValues = [author, title, isbn, image, description];
+
+  client.query(sql, safeValues)
+    .then(sqlResults => {
+      let id = sqlResults.rows[0].id;
+      response.status(200).redirect(`/books/${id}`);
+    });
+};
+
 
 // Constructor
 function Book(info){
   const placeholderImage = 'https://i.imgur.com/J5LVHEL.jpg';
-  this.image = info.imageLinks ? info.imageLinks : placeholderImage;
+  this.image = info.imageLinks.thumbnail ? info.imageLinks.thumbnail.replace(/http:/,'https:') : placeholderImage;
   this.title = info.title ? info.title : 'title unavailable';
   this.author = info.authors ? info.authors : 'not available';
   this.description = info.description ? info.description : 'not available';
-  this.isbn = info.industryIdentifiers[0] ? info.industryIdentifiers[0] : 'not available';
+  this.isbn = info.industryIdentifiers ?  `${info.industryIdentifiers[0].type} ${info.industryIdentifiers[0].identifier}` : 'not available';
 };
 
 // 404
