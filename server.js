@@ -65,6 +65,7 @@ function searchResults(request, response) {
       .query(queryParams)
       .then(results => {
         let bookArray = results.body.items;
+        console.log(bookArray[0].volumeInfo.industryIdentifiers[0]);
         const finalBookArray = bookArray.map(book => {
           return new Book(book.volumeInfo);
         });
@@ -84,6 +85,7 @@ function Book(info){
   this.title = info.title ? info.title : 'title unavailable';
   this.author = info.authors ? info.authors : 'not available';
   this.description = info.description ? info.description : 'not available';
+  this.isbn = info.industryIdentifiers[0] ? info.industryIdentifiers[0] : 'not available';
 };
 
 // 404
@@ -100,4 +102,3 @@ client.connect()
       console.log(`book server, listening on ${PORT}`);
     })
   });
-  
