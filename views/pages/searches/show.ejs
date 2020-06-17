@@ -17,7 +17,7 @@
         <ul>
           <% books.forEach(book => { %>
             <li>
-              <img src="<%= book.image.thumbnail %>" alt="<% book.image.thumbnail %>"/>
+              <img src="<%= book.image.thumbnail %>" alt="<% book.image.title %>"/>
               <h3><%= book.title %></h3>
               <h4><%= book.author %></h4>
               <p><%= book.description %></p>
