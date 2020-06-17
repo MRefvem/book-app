@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3001;
 
 // Application Middleware
 app.use(express.urlencoded({ extended: true })); // Body Parser
-app.use(express.static('public')); // Serve files from 'Public'
+app.use('/public', express.static('public')); // Serve files from 'Public'
 app.set('view engine', 'ejs'); // Look in 'view' for EJS
 
 // ROUTES
@@ -22,6 +22,7 @@ app.set('view engine', 'ejs'); // Look in 'view' for EJS
 app.get('/', getHome);
 app.get('/searches/new', newSearch);
 app.post('/searches', searchResults);
+app.get('/books/:id', getBookDetails);
 app.use('*', notFound);
 
 // getHome handler
@@ -65,6 +66,7 @@ function searchResults(request, response) {
       .query(queryParams)
       .then(results => {
         let bookArray = results.body.items;
+        console.log(bookArray[0].volumeInfo.industryIdentifiers[0]);
         const finalBookArray = bookArray.map(book => {
           return new Book(book.volumeInfo);
         });
@@ -76,6 +78,19 @@ function searchResults(request, response) {
   };
 };
 
+// getBookDetails handler
+function getBookDetails(request, response) {
+  console.log('this is my request.params/id', request.params);
+  let id = request.params.id;
+  let sql = 'SELECT * FROM books WHERE id=$1;';
+  let safeValues = [id];
+
+  client.query(sql, safeValues)
+    .then(sqlResults => {
+      response.status(200).render('pages/books/show.ejs', {oneBook:sqlResults.rows[0]});
+    })
+}
+
 
 // Constructor
 function Book(info){
@@ -84,6 +99,7 @@ function Book(info){
   this.title = info.title ? info.title : 'title unavailable';
   this.author = info.authors ? info.authors : 'not available';
   this.description = info.description ? info.description : 'not available';
+  this.isbn = info.industryIdentifiers[0] ? info.industryIdentifiers[0] : 'not available';
 };
 
 // 404
@@ -100,4 +116,3 @@ client.connect()
       console.log(`book server, listening on ${PORT}`);
     })
   });
-  
