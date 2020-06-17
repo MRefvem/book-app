@@ -108,7 +108,7 @@ function notFound(request, response){
 };
 
 // Turns on Server
-const client = new pg.Client(process.env.DATABASE_URL);
+const client = new pg.Client(process.env.HEROKU_POSTGRESQL_COPPER_URL);
 client.on('error', err => console.error(err));
 client.connect()
   .then(() => {
