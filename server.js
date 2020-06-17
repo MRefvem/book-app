@@ -22,6 +22,7 @@ app.set('view engine', 'ejs'); // Look in 'view' for EJS
 app.get('/', getHome);
 app.get('/searches/new', newSearch);
 app.post('/searches', searchResults);
+app.get('/books/:id', getBookDetails);
 app.use('*', notFound);
 
 // getHome handler
@@ -76,6 +77,19 @@ function searchResults(request, response) {
     response.status(500).send('sorry, we messed up');
   };
 };
+
+// getBookDetails handler
+function getBookDetails(request, response) {
+  console.log('this is my request.params/id', request.params);
+  let id = request.params.id;
+  let sql = 'SELECT * FROM books WHERE id=$1;';
+  let safeValues = [id];
+
+  client.query(sql, safeValues)
+    .then(sqlResults => {
+      response.status(200).render('pages/books/detail.ejs', {oneBook:sqlResults.rows[0]});
+    })
+}
 
 
 // Constructor

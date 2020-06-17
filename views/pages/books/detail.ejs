@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Book App</title>
+    <link href="/styles/reset.css" rel="stylesheet" type="text/css">
+    <link href="/styles/base.css" rel="stylesheet" type="text/css">
+    <link href="/styles/layout.css" rel="stylesheet" type="text/css">
+    <link href="/styles/modules.css" rel="stylesheet" type="text/css">
+    <link href="/styles/icons.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <header>
+      <div>Best Books!</div>
+      <div>Saved Books</div>
+    </header>
+    <main>
+        <ul>
+          <li>
+            <img src="<%= oneBook.image_url %>" alt="<% oneBook.title %>"/>
+            <h3><%= oneBook.title %></h3>
+            <h4><%= oneBook.author %></h4>
+            <p><%= oneBook.description %></p>
+            <p><%= oneBook.isbn %></p>
+          </li>
+        </ul>
+    </main>
+    <footer></footer>
+  </body>
+</html>
