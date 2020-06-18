@@ -106,6 +106,12 @@ h4 {
   margin-bottom: 10px;
 }
 
+#isbn {
+  font-style: italic;
+  font-size: 70%;
+  margin: 10px;
+}
+
 p {
   font-size: 60%;
   margin-left: 20px;

@@ -45,8 +45,6 @@ function deleteBook(request, response) {
 
 // updateBook handler
 function updateBook(request, response) {
-  console.log(request.params);
-  console.log(request.body);
   let bookId = request.params.id;
   let { title, author, description, isbn, image_url } = request.body;
 

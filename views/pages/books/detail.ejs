@@ -3,7 +3,7 @@
   <h3 class="preState"><%= oneBook.title %></h3>
   <h4 class="preState"><%= oneBook.author %></h4>
   <p class="preState"><%= oneBook.description %></p>
-  <p class="preState"><%= oneBook.isbn %></p>
+  <p id="isbn" class="preState"><%= oneBook.isbn %></p>
   <button id="showForm">Edit Details</button> 
   <form class="preState" action="/books/<%= oneBook.id %>?_method=DELETE" method="post">
     <button>Delete Book</button>
