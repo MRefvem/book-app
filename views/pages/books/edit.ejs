@@ -1,0 +1,10 @@
+<form class="update" action="/books/<%= oneBook.id %>?_method=PUT" method="post">
+  <input type="text" name="title" value="<%- oneBook.title %>" placeholder="<%- oneBook.title %>"/>
+  <input type="text" name="author" value="<%- oneBook.author %>" placeholder="<%- oneBook.author %>"/>
+  <input type="text" name="isbn" value="<%- oneBook.isbn %>" placeholder="<%- oneBook.isbn %>"/>
+  <input type="text" name="image_url" value="<%- oneBook.image_url %>" placeholder="<%- oneBook.image_url %>"/>
+  <input type="text" name="description" value="<%- oneBook.description %>" placeholder="<%- oneBook.description %>" />
+  <input type="text" name="isbn" value="<%- oneBook.isbn %>" placeholder="<%- oneBook.isbn %>"/>
+  <button>Update Book</button>
+</form>
+

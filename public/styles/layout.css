@@ -48,9 +48,21 @@ main {
   text-align: center;
 }
 
+.update {
+  display: none;
+}
+
+/* #showForm {
+
+} */
+
 nav {
   background-color: black;
   border: 1px solid black;
+  color: white;
+}
+
+a {
   color: white;
 }
 
