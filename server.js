@@ -7,6 +7,7 @@ const { response } = require('express');
 require('ejs');
 require('dotenv').config();
 const pg = require('pg');
+const methodOverride = require('method-override');
 
 // Application Setup
 const app = express();
@@ -16,6 +17,7 @@ const PORT = process.env.PORT || 3001;
 app.use(express.urlencoded({ extended: true })); // Body Parser
 app.use('/public', express.static('public')); // Serve files from 'Public'
 app.set('view engine', 'ejs'); // Look in 'view' for EJS
+app.use(methodOverride('_method'));
 
 // ROUTES
 // HOME
@@ -24,7 +26,39 @@ app.get('/searches/new', newSearch);
 app.post('/searches', searchResults);
 app.get('/books/:id', getBookDetails);
 app.post('/books', addBook);
+app.put('/books/:id', updateBook);
+app.delete('/books/:id', deleteBook);
 app.use('*', notFound);
+
+// deleteBook handler
+function deleteBook(request, response) {
+  let bookId = request.params.id;
+
+  let sql = 'DELETE FROM books WHERE id=$1;';
+  let safeValues = [bookId];
+
+  client.query(sql, safeValues)
+    .then(() => {
+      response.redirect('/');
+    });
+}
+
+// updateBook handler
+function updateBook(request, response) {
+  console.log(request.params);
+  console.log(request.body);
+  let bookId = request.params.id;
+  let { title, author, description, isbn, image_url } = request.body;
+
+  let sql = 'UPDATE books SET title=$1, author=$2, description=$3, isbn=$4, image_url=$5 WHERE id=$6;';
+  let safeValues = [title, author, description, isbn, image_url, bookId];
+
+  client.query(sql, safeValues)
+    .then(sqlResults => {
+      response.status(200).redirect(`/books/${bookId}`);
+    })
+    .catch();
+};
 
 // getHome handler
 function getHome(request, response) {
