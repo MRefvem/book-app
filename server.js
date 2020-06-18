@@ -76,37 +76,34 @@ function newSearch(request, response) {
 
 // searchResults handler
 function searchResults(request, response) {
-  try {
-    let query = request.body.search[0];
-    let titleOrAuthor = request.body.search[1];
+
+  let query = request.body.search[0];
+  let titleOrAuthor = request.body.search[1];
   
-    const numPerPage = 10;
+  const numPerPage = 10;
   
-    let url = 'https://www.googleapis.com/books/v1/volumes?q=';
+  let url = 'https://www.googleapis.com/books/v1/volumes?q=';
   
-    const queryParams = {
-      maxResults: numPerPage
-    }
+  const queryParams = {
+    maxResults: numPerPage
+  }
   
-    if(titleOrAuthor === 'title'){
-      url+= `+intitle:${query}`;
-    } else if(titleOrAuthor === 'author'){
-      url+= `+inauthor:${query}`;
-    };
-  
-    superagent.get(url)
-      .query(queryParams)
-      .then(results => {
-        let bookArray = results.body.items;
-        const finalBookArray = bookArray.map(book => {
-          return new Book(book.volumeInfo);
-        });
-          response.render('pages/searches/show.ejs', {books:finalBookArray});
-      })
-      .catch();
-  } catch(err) {
-    response.status(500).send('sorry, we messed up');
+  if(titleOrAuthor === 'title'){
+    url+= `+intitle:${query}`;
+  } else if(titleOrAuthor === 'author'){
+    url+= `+inauthor:${query}`;
   };
+  
+  superagent.get(url)
+    .query(queryParams)
+    .then(results => {
+      let bookArray = results.body.items;
+      const finalBookArray = bookArray.map(book => {
+        return new Book(book.volumeInfo);
+      });
+        response.render('pages/searches/show.ejs', {books:finalBookArray});
+    })
+    .catch();
 };
 
 // getBookDetails handler
