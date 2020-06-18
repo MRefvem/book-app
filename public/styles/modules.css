@@ -1,0 +1,22 @@
+ /* Desktop view */
+
+ @media (min-width: 680px) {
+
+  header {
+    width: 100%;
+  }
+
+  main {
+    width: 960px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  footer {
+    clear: both;
+    display: flex;
+    width: 100%;
+  }
+
+}

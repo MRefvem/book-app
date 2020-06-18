@@ -52,10 +52,6 @@ main {
   display: none;
 }
 
-/* #showForm {
-
-} */
-
 nav {
   background-color: black;
   border: 1px solid black;
@@ -106,10 +102,53 @@ h4 {
   margin-bottom: 10px;
 }
 
+#isbn {
+  font-style: italic;
+  font-size: 70%;
+  margin: 10px;
+}
+
 p {
   font-size: 60%;
   margin-left: 20px;
   margin-right: 20px;
   text-align: justify;
   text-justify: inter-word;
+}
+
+#update {
+  display: block;
+  width: 100px;
+}
+
+#saved {
+  border: 3px solid white;
+  border-radius: 150%;
+  font-weight: bold;
+  height: 40px;
+  padding: 3px;
+  width: 40px;
+}
+
+ /* Desktop view */
+
+ @media (min-width: 680px) {
+
+  header {
+    width: 100%;
+  }
+
+  main {
+    width: 960px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
+  footer {
+    clear: both;
+    display: flex;
+    width: 100%;
+  }
+
 }

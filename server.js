@@ -45,8 +45,6 @@ function deleteBook(request, response) {
 
 // updateBook handler
 function updateBook(request, response) {
-  console.log(request.params);
-  console.log(request.body);
   let bookId = request.params.id;
   let { title, author, description, isbn, image_url } = request.body;
 
@@ -78,37 +76,34 @@ function newSearch(request, response) {
 
 // searchResults handler
 function searchResults(request, response) {
-  try {
-    let query = request.body.search[0];
-    let titleOrAuthor = request.body.search[1];
+
+  let query = request.body.search[0];
+  let titleOrAuthor = request.body.search[1];
   
-    const numPerPage = 10;
+  const numPerPage = 10;
   
-    let url = 'https://www.googleapis.com/books/v1/volumes?q=';
+  let url = 'https://www.googleapis.com/books/v1/volumes?q=';
   
-    const queryParams = {
-      maxResults: numPerPage
-    }
+  const queryParams = {
+    maxResults: numPerPage
+  }
   
-    if(titleOrAuthor === 'title'){
-      url+= `+intitle:${query}`;
-    } else if(titleOrAuthor === 'author'){
-      url+= `+inauthor:${query}`;
-    };
-  
-    superagent.get(url)
-      .query(queryParams)
-      .then(results => {
-        let bookArray = results.body.items;
-        const finalBookArray = bookArray.map(book => {
-          return new Book(book.volumeInfo);
-        });
-          response.render('pages/searches/show.ejs', {books:finalBookArray});
-      })
-      .catch();
-  } catch(err) {
-    response.status(500).send('sorry, we messed up');
+  if(titleOrAuthor === 'title'){
+    url+= `+intitle:${query}`;
+  } else if(titleOrAuthor === 'author'){
+    url+= `+inauthor:${query}`;
   };
+  
+  superagent.get(url)
+    .query(queryParams)
+    .then(results => {
+      let bookArray = results.body.items;
+      const finalBookArray = bookArray.map(book => {
+        return new Book(book.volumeInfo);
+      });
+        response.render('pages/searches/show.ejs', {books:finalBookArray});
+    })
+    .catch();
 };
 
 // getBookDetails handler
@@ -140,10 +135,10 @@ function addBook(request, response) {
 function Book(info){
   const placeholderImage = 'https://i.imgur.com/J5LVHEL.jpg';
   this.image = info.imageLinks.thumbnail ? info.imageLinks.thumbnail.replace(/http:/,'https:') : placeholderImage;
-  this.title = info.title ? info.title : 'title unavailable';
-  this.author = info.authors ? info.authors : 'not available';
-  this.description = info.description ? info.description : 'not available';
-  this.isbn = info.industryIdentifiers ?  `${info.industryIdentifiers[0].type} ${info.industryIdentifiers[0].identifier}` : 'not available';
+  this.title = info.title ? info.title : 'No title available.';
+  this.author = info.authors ? info.authors : 'No authors available.';
+  this.description = info.description ? info.description : 'No description available.';
+  this.isbn = info.industryIdentifiers ?  `${info.industryIdentifiers[0].type} ${info.industryIdentifiers[0].identifier}` : 'No ISBN available.';
 };
 
 // 404
