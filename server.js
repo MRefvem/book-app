@@ -146,8 +146,8 @@ function notFound(request, response){
   response.status(404).send('sorry, this route does not exist');
 };
 
-// Turns on Server - need to revert to HEROKU_POSTGRESQL_COPPER_URL
-const client = new pg.Client(process.env.DATABASE_URL);
+// Turns on Server
+const client = new pg.Client(process.env.HEROKU_POSTGRESQL_COPPER_URL);
 client.on('error', err => console.error(err));
 client.connect()
   .then(() => {
