@@ -140,10 +140,10 @@ function addBook(request, response) {
 function Book(info){
   const placeholderImage = 'https://i.imgur.com/J5LVHEL.jpg';
   this.image = info.imageLinks.thumbnail ? info.imageLinks.thumbnail.replace(/http:/,'https:') : placeholderImage;
-  this.title = info.title ? info.title : 'title unavailable';
-  this.author = info.authors ? info.authors : 'not available';
-  this.description = info.description ? info.description : 'not available';
-  this.isbn = info.industryIdentifiers ?  `${info.industryIdentifiers[0].type} ${info.industryIdentifiers[0].identifier}` : 'not available';
+  this.title = info.title ? info.title : 'No title available.';
+  this.author = info.authors ? info.authors : 'No authors available.';
+  this.description = info.description ? info.description : 'No description available.';
+  this.isbn = info.industryIdentifiers ?  `${info.industryIdentifiers[0].type} ${info.industryIdentifiers[0].identifier}` : 'No ISBN available.';
 };
 
 // 404
@@ -151,8 +151,8 @@ function notFound(request, response){
   response.status(404).send('sorry, this route does not exist');
 };
 
-// Turns on Server
-const client = new pg.Client(process.env.HEROKU_POSTGRESQL_COPPER_URL);
+// Turns on Server - need to revert to HEROKU_POSTGRESQL_COPPER_URL
+const client = new pg.Client(process.env.DATABASE_URL);
 client.on('error', err => console.error(err));
 client.connect()
   .then(() => {
